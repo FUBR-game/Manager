@@ -1,4 +1,6 @@
 ﻿using System;
+using Manager.MessageTypes;
+using Newtonsoft.Json;
 
 namespace Manager
 {
@@ -24,7 +26,11 @@ namespace Manager
 
             protected override void HandleClient(object obj)
             {
+                var jsonString = (string) obj;
+                var message = (Message) JsonConvert.DeserializeObject(jsonString);
                 
+                var incomingMessage = new IncomingMessage(message);
+                incomingMessage.ExecuteMessage();
             }
         }
 

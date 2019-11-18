@@ -10,7 +10,6 @@ namespace Manager
 {
     public abstract class Server
     {
-        private int _connectionsHandled;
         private readonly TcpListener server;
 
         public Server(int port)
@@ -22,22 +21,25 @@ namespace Manager
 
         public void StartListener()
         {
-            try
+            new Thread(() =>
             {
-                while (true)
+                try
                 {
-                    Console.WriteLine("waiting for a connection...");
-                    var client = server.AcceptTcpClient();
+                    while (true)
+                    {
+                        Console.WriteLine("waiting for a connection...");
+                        var client = server.AcceptTcpClient();
 
-                    Console.WriteLine("New connection");
-                    var thread = new Thread(HandleClient);
-                    thread.Start(client);
+                        Console.WriteLine("New connection");
+                        var thread = new Thread(HandleClient);
+                        thread.Start(client);
+                    }
                 }
-            }
-            catch (SocketException e)
-            {
-                server.Stop();
-            }
+                catch (SocketException)
+                {
+                    server.Stop();
+                }
+            }).Start();
         }
 
         protected abstract void HandleClient(object obj);
