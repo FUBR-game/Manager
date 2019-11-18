@@ -1,5 +1,6 @@
 ﻿using System;
 using Manager.MessageTypes;
+using Manager.UserData;
 using Newtonsoft.Json;
 
 namespace Manager
@@ -13,7 +14,16 @@ namespace Manager
         private ClientManager _clientManager = new ClientManager();
         private ServerManager _serverManager = new ServerManager();
 
-        public CommunicationManager(){}
+        public CommunicationManager()
+        {
+            var userController = UserController.GetUserController();
+            userController.ServerQueueFull += UserControllerOnServerQueueFull;
+        }
+
+        private void UserControllerOnServerQueueFull(object sender, EventArgs e)
+        {
+            NewServerNeeded?.Invoke(sender, e);
+        }
 
         public event EventHandler NewServerNeeded;
 
