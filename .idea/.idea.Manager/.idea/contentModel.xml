@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\aran\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\aran\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_Manager.85760369.00" t="ExcludeRecursive" />
+    <e p="D:\Development\Manager" t="IncludeFlat">
+      <e p=".git\info\exclude" t="IncludeRecursive" />
+      <e p="Manager" t="IncludeRecursive">
+        <e p=".env" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="CommunicationManager.cs" t="Include" />
+        <e p="Interfaces" t="Include">
+          <e p="IUserController.cs" t="Include" />
+        </e>
+        <e p="Kubernetes.cs" t="Include" />
+        <e p="Manager.csproj" t="IncludeRecursive" />
+        <e p="MessageTypes" t="Include">
+          <e p="IncomingMessage.cs" t="Include" />
+          <e p="Message.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.0" t="Include">
+              <e p="Manager.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Server.cs" t="Include" />
+        <e p="UserData" t="Include">
+          <e p="MemoryUserController.cs" t="Include" />
+          <e p="UserController.cs" t="Include" />
+          <e p="UserStatus.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Manager.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
