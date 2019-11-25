@@ -13,11 +13,14 @@ namespace Manager.UserData
             var cacheController = Environment.GetEnvironmentVariable("CacheController");
             switch (cacheController)
             {
+                case "Redis":
+                    throw new NotSupportedException();
+                    break;
                 case "Memory":
-                    goto default;
-                default:
                     _controller = new MemoryUserController();
                     break;
+                default:
+                    throw new NotSupportedException();
             }
 
             return _controller;

@@ -1,4 +1,5 @@
 ﻿using System;
+using dotenv.net;
 
 namespace Manager
 {
@@ -7,6 +8,7 @@ namespace Manager
 
         public static void Main(string[] args)
         {
+            DotEnv.Config();
             var manager = new CommunicationManager();
             manager.NewServerNeeded += ManagerOnNewServerNeeded;
         }

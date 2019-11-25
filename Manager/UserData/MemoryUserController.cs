@@ -4,37 +4,37 @@ using Manager.Interfaces;
 
 namespace Manager.UserData
 {
-    public class MemoryUserController : IUserController
+    public sealed class MemoryUserController : IUserController
     {
-        private static readonly Dictionary<string, UserStatus> OnlineUsers = new Dictionary<string, UserStatus>();
-        private static readonly List<string> ServerQueue = new List<string>();
+        private static readonly Dictionary<uint, UserStatus> OnlineUsers = new Dictionary<uint, UserStatus>{{2,UserStatus.Online},{3,UserStatus.Busy},{4,UserStatus.Away}};
+        private static readonly List<uint> ServerQueue = new List<uint>();
 
-        public UserStatus GetUserUserStatus(string googleToken)
+        public UserStatus GetUserUserStatus(uint userId)
         {
-            return OnlineUsers.ContainsKey(googleToken) ? OnlineUsers[googleToken] : UserStatus.Offline;
+            return OnlineUsers.ContainsKey(userId) ? OnlineUsers[userId] : UserStatus.Offline;
         }
 
-        public bool UserChangesStatus(string googleToken, UserStatus userStatus)
+        public bool UserChangesStatus(uint userId, UserStatus userStatus)
         {
             if (userStatus == UserStatus.Offline)
             {
-                return OnlineUsers.Remove(googleToken);
+                return OnlineUsers.Remove(userId);
             }
 
-            OnlineUsers[googleToken] = userStatus;
+            OnlineUsers[userId] = userStatus;
 
             return true;
         }
 
-        public bool UserEntersQueue(string googleToken)
+        public bool UserEntersQueue(uint userId)
         {
-            if (ServerQueue.Contains(googleToken))
+            if (ServerQueue.Contains(userId))
             {
                 return false;
             }
-            ServerQueue.Add(googleToken);
+            ServerQueue.Add(userId);
 
-            if (UsersInQueue() >= int.Parse(Environment.GetEnvironmentVariable("MaxPlayersInServer") ?? throw new NullReferenceException()))
+            if (UsersInQueue() >= uint.Parse(Environment.GetEnvironmentVariable("MaxPlayersInServer") ?? throw new NullReferenceException()))
             {
                 OnServerQueueFull();
             }
@@ -42,9 +42,9 @@ namespace Manager.UserData
             return true;
         }
 
-        public bool UserLeavesQueue(string googleToken)
+        public bool UserLeavesQueue(uint userId)
         {
-            return ServerQueue.Remove(googleToken);
+            return ServerQueue.Remove(userId);
         }
 
         public event EventHandler ServerQueueFull;
@@ -54,7 +54,7 @@ namespace Manager.UserData
             return ServerQueue.Count;
         }
 
-        protected virtual void OnServerQueueFull()
+        private void OnServerQueueFull()
         {
             ServerQueueFull?.Invoke(this, EventArgs.Empty);
         }
